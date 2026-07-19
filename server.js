@@ -1,6 +1,6 @@
-/**
- * Chumba Yangu — M-Pesa Daraja STK Push server
- * ------------------------------------------------
+/***********************************************
+ * Fuliza Boost — M-Pesa Daraja STK Push Server
+ ***********************************************/
  * Handles:
  *   1. OAuth token generation (cached until it expires)
  *   2. POST /api/mpesa/stkpush        -> triggers the STK push prompt on the student's phone
@@ -106,8 +106,7 @@ app.post('/api/mpesa/stkpush', async (req, res) => {
       return res.status(400).json({ error: 'Enter a valid Safaricom number, e.g. 0712345678.' });
     }
     const amt = Math.round(Number(amount));
-    if (!amt || amt < 1) {
-      return res.status(400).json({ error: 'Invalid deposit amount.' });
+    if (!amt || amt < 1) {return res.status(400).json({ error: 'Invalid upgrade fee amount.' });
     }
     if (!MPESA_SHORTCODE || !MPESA_PASSKEY) {
       return res.status(500).json({ error: 'Server is missing M-Pesa shortcode/passkey configuration.' });
@@ -127,8 +126,8 @@ app.post('/api/mpesa/stkpush', async (req, res) => {
       PartyB: MPESA_SHORTCODE,
       PhoneNumber: msisdn,
       CallBackURL: MPESA_CALLBACK_URL,
-      AccountReference: (accountReference || 'ChumbaYangu').slice(0, 12),
-      TransactionDesc: (transactionDesc || 'Hostel booking deposit').slice(0, 13)
+      AccountReference: (accountReference || 'FulizaBoost').slice(0, 12),
+      TransactionDesc: (transactionDesc || 'Fuliza Upgrade').slice(0, 13)
     };
 
     const stkRes = await axios.post(
@@ -210,5 +209,4 @@ app.get('/health', (req, res) => res.json({ ok: true, env: MPESA_ENV }));
 
 const port = PORT || 4000;
 app.listen(port, () => {
-  console.log(`Chumba Yangu M-Pesa server running on port ${port} (${MPESA_ENV || 'sandbox'} mode)`);
-});
+  console.log(`Fuliza Boost M-Pesa server running on port ${port} (${MPESA_ENV || 'sandbox'} mode)`);
