@@ -1,17 +1,17 @@
 /***********************************************
  * Fuliza Boost — M-Pesa Daraja STK Push Server
- ***********************************************/
+ *
  * Handles:
  *   1. OAuth token generation (cached until it expires)
- *   2. POST /api/mpesa/stkpush        -> triggers the STK push prompt on the student's phone
- *   3. POST /api/mpesa/callback       -> Safaricom calls this URL with the payment result
- *   4. GET  /api/mpesa/status/:id     -> frontend polls this to find out if payment succeeded
+ *   2. POST /api/mpesa/stkpush
+ *   3. POST /api/mpesa/callback
+ *   4. GET /api/mpesa/status/:id
  *
  * Run:
- *   cp .env.example .env   (then fill in your real Daraja credentials)
+ *   cp .env.example .env
  *   npm install
  *   npm start
- */
+ ***********************************************/
 
 require('dotenv').config();
 const express = require('express');
@@ -210,3 +210,4 @@ app.get('/health', (req, res) => res.json({ ok: true, env: MPESA_ENV }));
 const port = PORT || 4000;
 app.listen(port, () => {
   console.log(`Fuliza Boost M-Pesa server running on port ${port} (${MPESA_ENV || 'sandbox'} mode)`);
+  });
