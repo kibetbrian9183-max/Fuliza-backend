@@ -120,7 +120,7 @@ app.post('/api/mpesa/stkpush', async (req, res) => {
       BusinessShortCode: MPESA_SHORTCODE,
       Password: password,
       Timestamp: timestamp,
-      TransactionType: 'CustomerPayBillOnline',
+      TransactionType: 'CustomerBuyGoodsOnline',
       Amount: amt,
       PartyA: msisdn,
       PartyB: MPESA_SHORTCODE,
